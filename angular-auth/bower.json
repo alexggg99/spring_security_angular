@@ -1,0 +1,13 @@
+{
+  "name": "serverlove500",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "~1.4.8",
+    "angular-resource": "~1.4.8",
+    "angular-route": "~1.4.8",
+    "angular-messages": "~1.4.8",
+    "bootstrap": "~3.3.6",
+    "bootswatch": "~3.3.6",
+    "openapi": "http://vk.com/js/api/openapi.js"
+  }
+}
