@@ -25,10 +25,9 @@ app.service('AuthService', function ($http) {
 
     self.restore = function (data, callback) {
         console.log(data);
-        callback({error: false});
-        //$http.post('/restore', data).then(function (res) {
-        //    callback(res.data);
-        //});
+        $http.post(auth_server_url + '/login/restore.json', data).then(function (res) {
+            callback(res.data);
+        });
     };
 
     self.check = function (callback) {
@@ -40,9 +39,9 @@ app.service('AuthService', function ($http) {
 
     self.register = function (data, callback) {
         console.log(data);
-        callback({error: false});
-        //$http.post('/register', data).then(function (res) {
-        //    callback(res.data);
-        //});
+        //callback({error: false});
+        $http.post(auth_server_url + '/login/register.json', data).then(function (res) {
+            callback(res.data);
+        });
     };
 });

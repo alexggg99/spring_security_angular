@@ -49,4 +49,6 @@
 
     <mvc:annotation-driven />
 
+    <context:property-placeholder location="classpath*:mail.properties"/>
+
 </beans>

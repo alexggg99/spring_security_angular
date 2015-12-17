@@ -1,7 +1,10 @@
 package bonvio.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -38,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/login/**").permitAll()
 //                .antMatchers("/", "/login/callback/vk", "/login/check", "/login/login.json", "/login/login.vk").permitAll()
-                .anyRequest().fullyAuthenticated()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
 //                .loginPage("/auth")
@@ -47,6 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .defaultSuccessUrl("/login/test")
                 .successHandler(new AjaxAuthenticationSuccessHandler())
                 .failureHandler(new AjaxAuthenticationFailureHandler())
+                .permitAll()
                 .and()
                 .logout()
                 .permitAll()

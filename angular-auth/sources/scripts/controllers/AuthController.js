@@ -13,7 +13,7 @@ app.controller('AuthController', function ($scope, AuthService) {
     $scope.vm.loginVK = function () {
         VK.init({apiId: 5178375});
         VK.Auth.login(function (res) {
-            console.log(res);
+            //console.log(res);
             if (res.status) {
                 AuthService.loginVK(res.session.user, function (data) {
                     if (!data.error) location.reload();

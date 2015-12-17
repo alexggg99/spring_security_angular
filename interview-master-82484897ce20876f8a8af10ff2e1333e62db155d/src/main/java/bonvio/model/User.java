@@ -46,6 +46,9 @@ public class User{
     private String lastName;
     private Date dateCreate;
     private Long idVk;
+    private String restoreToken;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date restoreTokenExpiredDate;
 
 
     public Integer getId() {
@@ -111,5 +114,21 @@ public class User{
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getRestoreToken() {
+        return restoreToken;
+    }
+
+    public void setRestoreToken(String restoreToken) {
+        this.restoreToken = restoreToken;
+    }
+
+    public Date getRestoreTokenExpiredDate() {
+        return restoreTokenExpiredDate;
+    }
+
+    public void setRestoreTokenExpiredDate(Date restoreTokenExpiredDate) {
+        this.restoreTokenExpiredDate = restoreTokenExpiredDate;
     }
 }

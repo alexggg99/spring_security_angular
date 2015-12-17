@@ -9,10 +9,13 @@ import bonvio.model.Repo.RoleRepo;
 import bonvio.model.Repo.UserRepo;
 import bonvio.model.Role;
 import bonvio.model.User;
+import bonvio.util.SendEmail;
+import org.apache.commons.lang3.time.DateUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,6 +36,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Collection;
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by Vano on 17.05.2015.
@@ -51,6 +56,8 @@ public class AuthController {
     private UserRepo userRepo;
     @Autowired
     private RoleRepo roleRepo;
+    @Autowired
+    private SendEmail sendEmail;
 //
 //    @Autowired
 //    TokenService tokenService;
@@ -85,6 +92,7 @@ public class AuthController {
     @RequestMapping(value = "/check", method = RequestMethod.GET)
     @ResponseBody
     public String user(){
+
 
         Authentication auth = SecurityContextHolder.getContext()
                 .getAuthentication();
@@ -322,7 +330,7 @@ public class AuthController {
                     lastName,
                     Long.valueOf(vkId)
             );
-            Role role = roleRepo.findOne(2);
+            Role role = roleRepo.findOne(1);
             newUser.authority = role;
             userRepo.save(newUser);
             user = newUser;
@@ -408,6 +416,38 @@ public class AuthController {
     }
 
     @ResponseBody
+    @RequestMapping(value="/register.json", method = RequestMethod.POST)
+    public String register(@RequestBody String loginRequest, HttpServletRequest request) {
+        String response = null;
+        String username = "";
+        String password = "";
+
+        JSONParser parser = new JSONParser();
+        try{
+            Object obj = parser.parse(loginRequest.toString());
+            JSONObject jsonObject = (JSONObject) obj;
+            username = (String) jsonObject.get("login");
+            password = (String) jsonObject.get("password");
+        }catch(ParseException pe){
+            System.out.println("position: " + pe.getPosition());
+            System.out.println(pe);
+        }
+
+        User user = userRepo.findByUsername(username);
+        if(user != null){
+            return "{\"error\": true}";
+        }
+        User newUser = new User();
+        newUser.username = username;
+        newUser.password = password;
+        Role role = roleRepo.findOne(1);
+        newUser.authority = role;
+        userRepo.save(newUser);
+        authUser(newUser);
+        return "{\"error\": false}";
+    }
+
+    @ResponseBody
     @RequestMapping(value="/logout.json", method = RequestMethod.GET)
     public String mosLogout(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -417,6 +457,30 @@ public class AuthController {
         }else{
             return "{\"error\": true}";
         }
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/restore.json", method = RequestMethod.POST)
+    public String restore(@RequestBody String request) {
+        String username = "";
+        JSONParser parser = new JSONParser();
+        try{
+            Object obj = parser.parse(request.toString());
+            JSONObject jsonObject = (JSONObject) obj;
+            username = (String) jsonObject.get("login");
+        }catch(ParseException pe){
+            System.out.println("position: " + pe.getPosition());
+            System.out.println(pe);
+        }
+        User user = userRepo.findByUsername(username);
+        if(user == null){
+            return "{\"error\": true}";
+        }
+        user.setRestoreToken(UUID.randomUUID().toString());
+        user.setRestoreTokenExpiredDate(DateUtils.addHours(new Date(), 1));
+        userRepo.save(user);
+        sendEmail.sendMail(user);
+        return "{\"error\": false}";
     }
 
     private void authUser(User user){
@@ -466,7 +530,6 @@ public class AuthController {
             }
 
         };
-
         authentication = trustedAuthentication;
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
