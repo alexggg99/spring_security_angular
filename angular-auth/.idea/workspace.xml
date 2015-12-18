@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="07067ae0-8c08-42c0-8188-ee8ec097d88c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sources/scripts/controllers/RestoreController.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sources/views/restore.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/tpl/restore.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sources/scripts/app.js" afterPath="$PROJECT_DIR$/sources/scripts/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sources/scripts/controllers/AuthController.js" afterPath="$PROJECT_DIR$/sources/scripts/controllers/AuthController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sources/scripts/service/AuthService.js" afterPath="$PROJECT_DIR$/sources/scripts/service/AuthService.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/app.js" afterPath="$PROJECT_DIR$/www/js/app.js" />
-    </list>
+    <list default="true" id="07067ae0-8c08-42c0-8188-ee8ec097d88c" name="Default" comment="" />
     <ignored path="angular-auth.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />

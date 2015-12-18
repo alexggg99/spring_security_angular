@@ -483,6 +483,35 @@ public class AuthController {
         return "{\"error\": false}";
     }
 
+    @ResponseBody
+    @RequestMapping(value="/changePassword.json", method = RequestMethod.POST)
+    public String changePassword(@RequestBody String request) {
+        String token = "";
+        String newPassword1 = "";
+        JSONParser parser = new JSONParser();
+        try{
+            Object obj = parser.parse(request.toString());
+            JSONObject jsonObject = (JSONObject) obj;
+            token = (String) jsonObject.get("token");
+            newPassword1 = (String) jsonObject.get("newPassword1");
+        }catch(ParseException pe){
+            System.out.println("position: " + pe.getPosition());
+            System.out.println(pe);
+        }
+        User user = userRepo.findByRestoreToken(token);
+        if(user == null){
+            return "{\"error\": true}";
+        }
+        if(user.getRestoreTokenExpiredDate().before(new Date())){
+            return "{\"error\": true}";
+        }
+        user.password = newPassword1;
+        user.setRestoreToken(null);
+        user.setRestoreTokenExpiredDate(null);
+        userRepo.save(user);
+        return "{\"error\": false}";
+    }
+
     private void authUser(User user){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

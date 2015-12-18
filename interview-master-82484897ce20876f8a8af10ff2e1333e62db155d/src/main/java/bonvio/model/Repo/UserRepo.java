@@ -19,6 +19,8 @@ public interface UserRepo extends CrudRepository<User, Long> {
 
         public User findByUsername(String username);
 
+        public User findByRestoreToken(String token);
+
         public User findById(Integer id);
 
         public User findByIdVk(long idVk);

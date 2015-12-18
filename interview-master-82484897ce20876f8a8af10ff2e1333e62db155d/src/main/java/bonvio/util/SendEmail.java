@@ -54,11 +54,11 @@ public class SendEmail {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(user.username));
             message.setSubject("Restore password");
-            String mes = "Dear ," + user.getFirstName()
-                    + "\n\n This is automated generated email." +
-                    " You can restore your password by this link : " + restoreURL +
-                    " Restore token: " + user.getRestoreToken() +
-                    " Please restore password within one hour !";
+            String mes = //"Dear ," + user.getFirstName() != null ? user.getFirstName() : user.username
+                    "\r This is automated generated email." +
+                    "\r You can restore your password by this link : " + restoreURL +
+                    "\r Restore token: " + user.getRestoreToken() +
+                    "\r Please restore password within one hour !";
             message.setText(mes);
             Transport.send(message);
 
