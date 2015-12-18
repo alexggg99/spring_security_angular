@@ -1,4 +1,4 @@
-app.controller('AuthController', function ($scope, AuthService) {
+app.controller('AuthController', function ($scope, $location, AuthService) {
     $scope.vm = this;
 
     $scope.vm.user = {};
@@ -32,7 +32,7 @@ app.controller('AuthController', function ($scope, AuthService) {
 
     $scope.vm.restore = function () {
         AuthService.restore($scope.vm.user, function (data) {
-            if (!data.error) jQuery('#restore.modal').modal('show');
+            if (!data.error) $location.url('/restore');
             else jQuery('#error.modal').modal('show');
         });
     };

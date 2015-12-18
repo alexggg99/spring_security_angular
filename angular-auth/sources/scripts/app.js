@@ -9,6 +9,10 @@ app.config(function ($httpProvider, $routeProvider, $locationProvider) {
         .when('/auth', {
             controller: 'AuthController',
             templateUrl: 'tpl/auth.html'
+        })
+        .when('/restore', {
+            controller: 'RestoreController',
+            templateUrl: 'tpl/restore.html'
         });
 
     $httpProvider.defaults.withCredentials = true;
@@ -18,7 +22,16 @@ app.config(function ($httpProvider, $routeProvider, $locationProvider) {
 
 app.run(function ($location, AuthService) {
     AuthService.check(function (data) {
-        if (data.error) $location.url('/auth');
-        else if ($location.path() == '/auth') $location.url('/user')
+        if (data.error) {
+            if($location.path() == '/restore'){
+                $location.url('/restore');
+            } else {
+                $location.url('/auth');
+            }
+        }
+        else{
+            if ($location.path() == '/auth')
+                $location.url('/user')
+        }
     });
 });

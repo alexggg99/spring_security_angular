@@ -30,6 +30,13 @@ app.service('AuthService', function ($http) {
         });
     };
 
+    self.changePassword = function (data, callback) {
+        console.log(data);
+        $http.post(auth_server_url + '/login/changePassword.json', data).then(function (res) {
+            callback(res.data);
+        });
+    };
+
     self.check = function (callback) {
         //callback({error: true});
         $http.get(auth_server_url + '/login/check').then(function (res) {

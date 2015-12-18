@@ -1,0 +1,21 @@
+
+<!--<div class="row">-->
+    <!--<div class="col-sm-12">-->
+        <!--<p>Restore password: </p>-->
+        <!--<input ng-model="vm.token" placeholder="TOKEN"/>-->
+        <!--<input name="password" ng-model="vm.newPassword" required="" placeholder="TOKEN"/>-->
+        <!--<input name="confirm_password" ui-validate=" '$value==password' " placeholder="TOKEN"/>-->
+        <!--<button class="btn btn-primary" data-ng-click="vm.logout()">Выход</button>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div class="container">
+    <div class="row">
+        <p>Restore password: </p>
+        <input ng-model="vm.restorePass.token" placeholder="TOKEN"/><br/><br/>
+        <input type="password" ng-model="vm.restorePass.newPassword1" placeholder="new password"/><br/><br/>
+        <input type="password" ng-model="vm.restorePass.newPassword2" placeholder="confirm new password" />
+        <label ng-show="vm.newPassword1 != vm.newPassword2">Passwords do not match...</label>
+        <button ng-disabled="vm.newPassword1 != vm.newPassword2" data-ng-click="vm.changePassword()">Save</button>
+    </div>
+</div>
